@@ -17,7 +17,7 @@ const user = (function(){
     const logout = function(ctx){
         userModel.logout().done(function(){
             storage.deleteUser();
-            
+            notify.showInfo('Successfuly logged out.');
             ctx.redirect('#/');
         });
     }

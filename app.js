@@ -5,11 +5,17 @@ const app = Sammy('#container', function(){
     });
 
     this.get('#/', home.index);
+    this.get('/', home.index);
+    this.get('/index', home.index);
+
     this.get('#/login', user.getLogin);
     this.post('#/login', user.postLogin);
     this.get('#/logout', user.logout);
     this.get('#/register', user.getRegister);
     this.post('#/register', user.postRegister);
+
+    this.get('#/addPet', pet.getAddPet);
+    this.post('#/addPet', pet.postAddPet);
 });
 
 $(function(){

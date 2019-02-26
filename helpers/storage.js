@@ -1,4 +1,4 @@
-const storage = function () {
+const storage = (() => {
     const appKey = 'kid_HJCY7AMU4';
     const appSecret = '37a51e178a55408595babcaa06933516';
 
@@ -37,4 +37,4 @@ const storage = function () {
         saveUser,
         deleteUser
     };
-}();
+})();

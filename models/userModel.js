@@ -15,7 +15,7 @@ const userModel = (() => {
 
     const logout = function(){
         var url = userUrl +  '/_logout';
-
+        
         return requester.post(url);
     }
 
@@ -34,7 +34,7 @@ const userModel = (() => {
     };
 
      function isAuthorized(){
-        return storage.getData('authToken') !== null;
+        return storage.getData('authToken');
     };
 
     return {
