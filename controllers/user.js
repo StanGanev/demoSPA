@@ -1,6 +1,11 @@
 const user = (function(){
     const getLogin = function(ctx){
-        ctx.partial('views/forms/login.hbs');
+        ctx.loadPartials({
+            header: './views/common/header.hbs',
+            footer: './views/common/footer.hbs',
+        }).then(function () {
+            this.partial('views/forms/login.hbs');
+        }) 
     };
 
     const postLogin = function(ctx){
@@ -23,7 +28,12 @@ const user = (function(){
     }
 
     const getRegister = function(ctx) {
-        ctx.partial('views/forms/register.hbs');
+        ctx.loadPartials({
+            header: './views/common/header.hbs',
+            footer: './views/common/footer.hbs',
+        }).then(function () {
+            this.partial('views/forms/register.hbs');
+        }) 
     };
 
     const postRegister = function(ctx) {
