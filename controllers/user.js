@@ -15,7 +15,7 @@ const user = (function(){
         userModel.login(username, password).done(function(data){
             storage.saveUser(data);
             notify.showInfo('Login successful.');
-            ctx.redirect('#/');
+            ctx.redirect('#/dashboard');
         });
     };
 
@@ -40,13 +40,13 @@ const user = (function(){
         userModel.register(ctx.params).done(function(data){
             storage.saveUser(data);
             notify.showInfo('User registration successful.');
-            ctx.redirect('#/');
+            ctx.redirect('#/dashboard');
         });
     }
 
     const initializeLogin = function(){
         if(userModel.isAuthorized()){
-            return true
+            return storage.getData('userInfo').username;
         }
         else {
             return false

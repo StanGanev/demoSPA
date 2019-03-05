@@ -16,6 +16,9 @@ const app = Sammy('#container', function(){
 
     this.get('#/addPet', pet.getAddPet);
     this.post('#/addPet', pet.postAddPet);
+    this.get('#/dashboard', pet.getPets);
+    this.get('#/dashboard/all', pet.getPets);
+    this.get('#/dashboard/cats', pet.getCats);
 });
 
 $(function(){
