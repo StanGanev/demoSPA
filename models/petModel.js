@@ -25,9 +25,23 @@ const petModel = (() => {
         return requester.get(url);
     }
 
+    const listMyPets = function() {
+        let url = petsUrl + `?query={"_acl.creator":"${storage.getData('userInfo').id}"}`;
+
+        return requester.get(url);
+    }
+
+    const getPetId = function(id) {
+        let url = petsUrl + '/' + `${id}`;
+
+        return requester.get(url);
+    }
+
     return {
         addPet,
         getOtherPets,
-        getOtherPetsByCategory
+        getOtherPetsByCategory,
+        listMyPets,
+        getPetId
     }
 })()
