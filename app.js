@@ -24,7 +24,11 @@ const app = Sammy('#container', function(){
     this.get('#/dashboard/reptiles', pet.getReptiles);
     this.get('#/dashboard/other', pet.getOthers);
     this.get('#/myPets', pet.getMyPets);
-    this.get('#/details', pet.getDetails);
+    this.get('#/details/:id', pet.getDetails);
+    this.get('#/delete/:id', pet.getDelete);
+    this.post('#/delete/:id', pet.postDelete);
+    this.get('#/edit/:id', pet.getEdit);
+    this.post('#/edit/:id', pet.postEdit);
 });
 
 $(function(){

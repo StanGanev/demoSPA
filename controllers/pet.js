@@ -184,7 +184,8 @@ const pet = (function () {
             ctx.redirect('#/login')
         } else {
             ctx.username = user.initializeLogin();
-            petModel.getPetId(ctx.params['_id']).done((pet) => {
+
+            petModel.getPetId(ctx.params['id']).done((pet) => {
                 ctx.pet = pet
 
                 ctx.loadPartials({
@@ -199,6 +200,84 @@ const pet = (function () {
         }
     }
 
+    const getDelete = function (ctx) {
+        if (!userModel.isAuthorized()) {
+            ctx.redirect('#/login')
+        } else {
+            ctx.username = user.initializeLogin();
+
+            petModel.getPetId(ctx.params['id']).done((pet) => {
+                ctx.pet = pet
+
+                ctx.loadPartials({
+                    header: './views/common/header.hbs',
+                    footer: './views/common/footer.hbs'
+                }).then(function () {
+                    this.partial('./views/delete.hbs');
+                })
+            }).fail(function () {
+                notify.handleError();
+            })
+        }
+    }
+
+    const postDelete = function (ctx) {
+        let id = ctx.params['id'];
+
+        petModel.deletePet(id).done(() => {
+            notify.showInfo('Pet deleted!');
+            ctx.redirect('#/myPets')
+        }).fail(function () {
+            notify.handleError();
+        })
+    }
+
+    const getEdit = function (ctx) {
+        if (!userModel.isAuthorized()) {
+            ctx.redirect('#/login')
+        } else {
+            ctx.username = user.initializeLogin();
+
+            petModel.getPetId(ctx.params['id']).done((pet) => {
+                ctx.pet = pet
+
+                ctx.loadPartials({
+                    header: './views/common/header.hbs',
+                    footer: './views/common/footer.hbs'
+                }).then(function () {
+                    this.partial('./views/edit.hbs');
+                })
+            }).fail(function () {
+                notify.handleError();
+            })
+        }
+    }
+
+    const postEdit = function (ctx) {
+        let id = ctx.params['id'];
+        let editedInfo = ctx.params.description;
+
+        petModel.getPetId(id).done((pet) => {
+            let petInfo = {
+                name: pet.name,
+                likes: pet.likes,
+                description: editedInfo,
+                imageURL: pet.imageURL,
+                category: pet.category
+            }
+            petModel.editPet(id, petInfo).done(() => {
+                notify.showInfo('Pet edited!')
+                ctx.redirect('#/myPets')
+            }).fail(function () {
+                notify.handleError();
+            })
+        }).fail(function () {
+            notify.handleError();
+        })
+
+
+    }
+
 
     return {
         getAddPet,
@@ -210,6 +289,10 @@ const pet = (function () {
         getReptiles,
         getOthers,
         getMyPets,
-        getDetails
+        getDetails,
+        getDelete,
+        postDelete,
+        getEdit,
+        postEdit
     }
 })();

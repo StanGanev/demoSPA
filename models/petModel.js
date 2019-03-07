@@ -37,11 +37,25 @@ const petModel = (() => {
         return requester.get(url);
     }
 
+    const deletePet = function(id) {
+        let url = petsUrl + '/' + `${id}`;
+
+        return requester.del(url);
+    }
+
+    const editPet = function(id,petInfo) {
+        let url = petsUrl + '/' + `${id}`;
+
+        return requester.put(url,petInfo);
+    }
+
     return {
         addPet,
         getOtherPets,
         getOtherPetsByCategory,
         listMyPets,
-        getPetId
+        getPetId,
+        deletePet,
+        editPet
     }
 })()
