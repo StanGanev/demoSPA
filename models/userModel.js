@@ -19,12 +19,10 @@ const userModel = (() => {
         return requester.post(url);
     }
 
-    const register = function(params){
+    const register = function(username,password){
         var data = {
-            username: params.username,
-            password: params.password,
-            first_name: params.first_name,
-            last_name: params.last_name
+            username: username,
+            password: password,
         }
 
         var authString = btoa(`${storage.appKey}:${storage.appSecret}`);

@@ -18,7 +18,7 @@ const pet = (function () {
             notify.showInfo('Pet added sucessfuly!')
             ctx.redirect('#/dashboard')
         }).fail(function () {
-            notify.handleError()
+            notify.showError('Error')
         })
     }
 
@@ -39,7 +39,7 @@ const pet = (function () {
                     this.partial('./views/dashboard.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -62,7 +62,7 @@ const pet = (function () {
                     this.partial('./views/dashboard.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -85,7 +85,7 @@ const pet = (function () {
                     this.partial('./views/dashboard.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -108,7 +108,7 @@ const pet = (function () {
                     this.partial('./views/dashboard.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -131,7 +131,7 @@ const pet = (function () {
                     this.partial('./views/dashboard.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -154,7 +154,7 @@ const pet = (function () {
                     this.partial('./views/dashboard.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -174,7 +174,7 @@ const pet = (function () {
                     this.partial('./views/myPets.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -195,7 +195,7 @@ const pet = (function () {
                     this.partial('./views/details.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -216,7 +216,7 @@ const pet = (function () {
                     this.partial('./views/delete.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -228,7 +228,7 @@ const pet = (function () {
             notify.showInfo('Pet deleted!');
             ctx.redirect('#/myPets')
         }).fail(function () {
-            notify.handleError();
+            notify.showError('Error');
         })
     }
 
@@ -248,7 +248,7 @@ const pet = (function () {
                     this.partial('./views/edit.hbs');
                 })
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }
     }
@@ -269,13 +269,36 @@ const pet = (function () {
                 notify.showInfo('Pet edited!')
                 ctx.redirect('#/myPets')
             }).fail(function () {
-                notify.handleError();
+                notify.showError('Error');
             })
         }).fail(function () {
-            notify.handleError();
+            notify.showError('Error');
         })
+    }
 
+    const petPet = function (ctx) {
+        let id = ctx.params['id'];
 
+        petModel.getPetId(id).done((pet) => {
+
+            let petLikes = +pet.likes + 1;
+
+            let petInfo = {
+                name: pet.name,
+                likes: petLikes,
+                description: pet.description,
+                imageURL: pet.imageURL,
+                category: pet.category
+            }
+            petModel.editPet(id, petInfo).done(() => {
+                notify.showInfo('Pet like added!')
+                ctx.redirect(`#/details/${id}`)
+            }).fail(function () {
+                notify.showError('Error');
+            })
+        }).fail(function () {
+            notify.showError('Error');
+        })
     }
 
 
@@ -293,6 +316,7 @@ const pet = (function () {
         getDelete,
         postDelete,
         getEdit,
-        postEdit
+        postEdit,
+        petPet
     }
 })();

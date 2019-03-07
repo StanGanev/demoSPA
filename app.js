@@ -1,8 +1,5 @@
 const app = Sammy('#container', function(){
     this.use('Handlebars', 'hbs');
-    this.before({except: {}}, function() {
-        user.initializeLogin();
-    });
 
     this.get('#/', home.index);
     this.get('/', home.index);
@@ -29,6 +26,7 @@ const app = Sammy('#container', function(){
     this.post('#/delete/:id', pet.postDelete);
     this.get('#/edit/:id', pet.getEdit);
     this.post('#/edit/:id', pet.postEdit);
+    this.get('#/pet/:id', pet.petPet);
 });
 
 $(function(){
